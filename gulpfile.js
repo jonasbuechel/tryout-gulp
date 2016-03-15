@@ -5,7 +5,8 @@
 var gulp    = require('gulp'),
     concat  = require('gulp-concat'),
     uglify  = require('gulp-uglify'),
-    rename  = require('gulp-rename');
+    rename  = require('gulp-rename'),
+    sass    = require('gulp-sass');
 
 //Testtask with name 'hello'
 gulp.task('hello', function(){
@@ -28,6 +29,14 @@ gulp.task('minifyScripts', function(){
     .pipe(uglify())
     .pipe(rename('app.min.js'))
     .pipe(gulp.dest('js'));
+});
+
+//compileSass: allows to compile sass to css
+gulp.task('compileSass', function(){
+    gulp.src('scss/application.scss')
+    .pipe(sass())
+    .pipe(rename('application.css'))
+    .pipe(gulp.dest('css'));
 });
 
 //set default task
