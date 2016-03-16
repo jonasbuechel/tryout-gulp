@@ -6,7 +6,8 @@ var gulp    = require('gulp'),
     concat  = require('gulp-concat'),
     uglify  = require('gulp-uglify'),
     rename  = require('gulp-rename'),
-    sass    = require('gulp-sass');
+    sass    = require('gulp-sass'),
+    maps    = require('gulp-sourcemaps');
 
 //Testtask with name 'hello'
 gulp.task('hello', function(){
@@ -34,8 +35,9 @@ gulp.task('minifyScripts', function(){
 //compileSass: allows to compile sass to css
 gulp.task('compileSass', function(){
     gulp.src('scss/application.scss')
+    .pipe(maps.init())
     .pipe(sass())
-    .pipe(rename('application.css'))
+    .pipe(maps.write('./'))
     .pipe(gulp.dest('css'));
 });
 
