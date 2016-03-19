@@ -64,8 +64,9 @@ gulp.task('build', ['minifyScripts', 'compileSass'], function () {
 
 // Sass watch-task: watches filechanges and runs the cfompileSass task
 
-gulp.task('watchSass', function () {
+gulp.task('watchFiles', function () {
     gulp.watch(['scss/**/*.scss'], ['compileSass']);
+    gulp.watch(['js/main.js'], ['minifyScripts']);
 });
 
 // Set default task
