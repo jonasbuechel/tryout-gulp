@@ -8,6 +8,7 @@ var uglify  = require('gulp-uglify');
 var rename  = require('gulp-rename');
 var sass    = require('gulp-sass');
 var maps    = require('gulp-sourcemaps');
+var del     = require('del');
 
 // Testtask with name 'hello'
 
@@ -47,6 +48,12 @@ gulp.task('compileSass', function () {
                 .pipe(gulp.dest('css'));
 });
 
+// Clean Task: removes dist folder
+
+gulp.task('clean', function () {
+    del('dist', 'css/application.css*', 'app*.js*');
+});
+
 // Build task: comnbines all needed tasks to build the app
 
 gulp.task('build', ['minifyScripts', 'compileSass'], function () {
@@ -63,4 +70,6 @@ gulp.task('watchSass', function () {
 
 // Set default task
 
-gulp.task('default', ['hello', 'build']);
+gulp.task('default', ['hello', 'clean'], function () {
+    gulp.start('build');
+});
