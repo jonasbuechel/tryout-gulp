@@ -1,59 +1,66 @@
-'use strict';
-
 /*jslint node: true*/
 
-var gulp    = require('gulp'),
-    concat  = require('gulp-concat'),
-    uglify  = require('gulp-uglify'),
-    rename  = require('gulp-rename'),
-    sass    = require('gulp-sass'),
-    maps    = require('gulp-sourcemaps');
+'use strict';
 
-//Testtask with name 'hello'
-gulp.task('hello', function(){
+var gulp    = require('gulp');
+var concat  = require('gulp-concat');
+var uglify  = require('gulp-uglify');
+var rename  = require('gulp-rename');
+var sass    = require('gulp-sass');
+var maps    = require('gulp-sourcemaps');
+
+// Testtask with name 'hello'
+
+gulp.task('hello', function () {
     console.log('I just say hello in the console!');
 });
 
-//concatScripts: allows to bundle js files
-gulp.task('concatScripts', function(){
+// ConcatScripts: allows to bundle js files
+
+gulp.task('concatScripts', function () {
     return gulp.src([
-        'js/jquery.js', 
-        'js/sticky/jquery.sticky.js', 
+        'js/jquery.js',
+        'js/sticky/jquery.sticky.js',
         'js/main.js'])
-    .pipe(maps.init())
-    .pipe(concat('app.js'))
-    .pipe(maps.write('./'))
-    .pipe(gulp.dest('js'));
+        .pipe(maps.init())
+        .pipe(concat('app.js'))
+        .pipe(maps.write('./'))
+        .pipe(gulp.dest('js'));
 });
 
-//minifyScripts: allows to minify js files
-gulp.task('minifyScripts', ['concatScripts'], function(){
+// MinifyScripts: allows to minify js files
+
+gulp.task('minifyScripts', ['concatScripts'], function () {
     return gulp.src('js/app.js')
-    .pipe(uglify())
-    .pipe(rename('app.min.js'))
-    .pipe(gulp.dest('js'));
+                .pipe(uglify())
+                .pipe(rename('app.min.js'))
+                .pipe(gulp.dest('js'));
 });
 
-//compileSass: allows to compile sass to css
-gulp.task('compileSass', function(){
+// CompileSass: allows to compile sass to css
+
+gulp.task('compileSass', function () {
     return gulp.src('scss/application.scss')
-    .pipe(maps.init())
-    .pipe(sass())
-    .pipe(maps.write('./'))
-    .pipe(gulp.dest('css'));
+                .pipe(maps.init())
+                .pipe(sass())
+                .pipe(maps.write('./'))
+                .pipe(gulp.dest('css'));
 });
 
-//build task: comnbines all needed tasks to build the app
-gulp.task('build',['minifyScripts', 'compileSass'], function(){
+// Build task: comnbines all needed tasks to build the app
+
+gulp.task('build', ['minifyScripts', 'compileSass'], function () {
     return gulp.src(['css/application.css', 'js/app.min.js', 'index.html',
-                     'img/**', 'fonts/**'], {base: './'})
+                   'img/**', 'fonts/**'], {base: './'})
                 .pipe(gulp.dest('dist'));
 });
 
-//sass watch-task: watches filechanges and runs the cfompileSass task
-gulp.task('watchSass', function(){
-    gulp.watch(['scss/**/*.scss'],['compileSass']);
+// Sass watch-task: watches filechanges and runs the cfompileSass task
+
+gulp.task('watchSass', function () {
+    gulp.watch(['scss/**/*.scss'], ['compileSass']);
 });
 
-//set default task
+// Set default task
+
 gulp.task('default', ['hello', 'build']);
