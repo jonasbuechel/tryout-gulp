@@ -69,6 +69,10 @@ gulp.task('watchFiles', function () {
     gulp.watch(['js/main.js'], ['minifyScripts']);
 });
 
+// Serve Task
+
+gulp.task('serve', ['watchFiles']);
+
 // Set default task
 
 gulp.task('default', ['hello', 'clean'], function () {
