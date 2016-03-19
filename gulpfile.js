@@ -45,7 +45,9 @@ gulp.task('compileSass', function(){
 
 //build task: comnbines all needed tasks to build the app
 gulp.task('build',['minifyScripts', 'compileSass'], function(){
-    
+    return gulp.src(['css/application.css', 'js/app.min.js', 'index.html',
+                     'img/**', 'fonts/**'], {base: './'})
+                .pipe(gulp.dest('dist'));
 });
 
 //sass watch-task: watches filechanges and runs the cfompileSass task
